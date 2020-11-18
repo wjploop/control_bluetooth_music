@@ -5,6 +5,7 @@ import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
+import java.io.Serializable
 import javax.swing.JTextField
 
 class CustomJTextFiled(id: Action) : JTextField() {
@@ -50,9 +51,9 @@ class CustomJTextFiled(id: Action) : JTextField() {
 data class CustomKey(
         val keyCode: Int,
         val keyMod: Int,
-)
+):Serializable
 
-val keyMaps = mutableMapOf<Action, CustomKey>(
+var keyMaps = mutableMapOf<Action, CustomKey>(
         Action.PAUSE to CustomKey(NativeKeyEvent.VC_SPACE, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
         Action.PREV to CustomKey(NativeKeyEvent.VC_LEFT, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
         Action.NEXT to CustomKey(NativeKeyEvent.VC_RIGHT, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),

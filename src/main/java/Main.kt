@@ -1,33 +1,52 @@
 import org.jnativehook.GlobalScreen
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
-import java.awt.event.InputEvent
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
+import java.awt.event.*
+import java.io.*
+import java.lang.Exception
+import java.util.logging.Level
+import java.util.logging.Logger
 import javax.swing.BorderFactory
 import javax.swing.JFrame
+import kotlin.system.exitProcess
 
 fun main() {
+
+
+    if (!keymapsFile.exists()) {
+        keymapsFile.createNewFile()
+    } else {
+        readConfig()
+    }
 
 
     val controller = Controller()
 
 
-    val jFrame = JFrame()
+    JFrame().apply {
+        contentPane = Panel(controller).apply {
+            border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        }
+        isFocusable = true
+        pack()
+        setLocationRelativeTo(null)
+        isVisible = true
 
-    jFrame.contentPane = Panel(controller).apply {
-        border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        addWindowListener(object : WindowAdapter() {
+            override fun windowClosing(e: WindowEvent?) {
+                super.windowClosing(e)
+                saveConfig()
+                exitProcess(0)
+            }
+        })
     }
-
-
-    jFrame.isVisible = true
-    jFrame.isFocusable = true
-    jFrame.pack()
-    jFrame.setLocationRelativeTo(null)
-    jFrame.isVisible = true
 
     // refer https://stackoverflow.com/questions/901224/listening-for-input-without-focus-in-java
     GlobalScreen.registerNativeHook()
+
+    Logger.getLogger(GlobalScreen::class.java.`package`.name).apply {
+        level = Level.OFF
+    }
 
     GlobalScreen.addNativeKeyListener(object : NativeKeyListener {
         override fun nativeKeyTyped(p0: NativeKeyEvent?) {
@@ -54,4 +73,25 @@ fun main() {
         }
     })
 
+}
+
+val keymapsFile = File("keymaps")
+
+fun readConfig() {
+    ObjectInputStream(FileInputStream(keymapsFile)).use {
+        try {
+            it.readObject()?.let {
+                @Suppress("UNCHECKED_CAST")
+                keyMaps = it as MutableMap<Action, CustomKey>
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+}
+
+fun saveConfig() {
+    ObjectOutputStream(FileOutputStream(keymapsFile)).use {
+        it.writeObject(keyMaps)
+    }
 }
