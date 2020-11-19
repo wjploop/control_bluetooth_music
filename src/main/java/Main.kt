@@ -53,6 +53,7 @@ fun main() {
 
                 val optionPanel = JOptionPane("minimize to tray or exit ?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, null
                 )
+
                 val options = arrayOf(
                         JButton(object : AbstractAction("minimize") {
                             override fun actionPerformed(e: ActionEvent?) {
@@ -62,11 +63,14 @@ fun main() {
 
                                 val popupMenu = PopupMenu()
                                 val trayIcon = TrayIcon(smallImg, "control", popupMenu)
+                                fun showMainFrame() {
+                                    jframe.isVisible = true
+                                    SystemTray.getSystemTray().remove(trayIcon)
+                                }
                                 popupMenu.apply {
                                     add(MenuItem("open").apply {
                                         addActionListener {
-                                            jframe.isVisible = true
-                                            SystemTray.getSystemTray().remove(trayIcon)
+                                            showMainFrame()
                                         }
                                     })
                                     add(MenuItem("exit")).apply {
@@ -75,6 +79,13 @@ fun main() {
                                         }
                                     }
                                 }
+                                trayIcon.addMouseListener(object : MouseAdapter() {
+                                    override fun mousePressed(e: MouseEvent) {
+                                        if (e.clickCount >= 2) {
+                                            showMainFrame()
+                                        }
+                                    }
+                                })
                                 SystemTray.getSystemTray().add(trayIcon)
                             }
 
@@ -91,9 +102,9 @@ fun main() {
 
                 if (SystemTray.isSupported()) {
                     optionPanel.createDialog(jframe, null).run {
-                        isVisible=true
+                        isVisible = true
                     }
-                }else{
+                } else {
                     exitProcess(0)
                 }
             }
