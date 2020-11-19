@@ -1,4 +1,4 @@
-enum class Action {
+enum class MediaAction {
     PAUSE,
     PREV,
     NEXT,

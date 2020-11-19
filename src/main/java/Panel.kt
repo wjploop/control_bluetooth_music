@@ -10,7 +10,7 @@ class Panel(val controller: Controller) : JPanel() {
                 controller.pauseMedia()
             }
         })
-        add(CustomJTextFiled(Action.PAUSE))
+        add(CustomJTextFiled(MediaAction.PAUSE))
 
 
         add(JButton("prev").apply {
@@ -18,7 +18,7 @@ class Panel(val controller: Controller) : JPanel() {
                 controller.prevMedia()
             }
         })
-        add(CustomJTextFiled(Action.PREV))
+        add(CustomJTextFiled(MediaAction.PREV))
 
 
         add(JButton("next").apply {
@@ -26,21 +26,21 @@ class Panel(val controller: Controller) : JPanel() {
                 controller.nextMedia()
             }
         })
-        add(CustomJTextFiled(Action.NEXT))
+        add(CustomJTextFiled(MediaAction.NEXT))
 
         add(JButton("add volume").apply {
             addActionListener {
                 controller.addVolume()
             }
         })
-        add(CustomJTextFiled(Action.ADD_VOL))
+        add(CustomJTextFiled(MediaAction.ADD_VOL))
 
         add(JButton("del volume").apply {
             addActionListener {
                 controller.delVolume()
             }
         })
-        add(CustomJTextFiled(Action.DEL_VOL))
+        add(CustomJTextFiled(MediaAction.DEL_VOL))
 
         requestFocus()
     }

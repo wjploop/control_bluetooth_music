@@ -3,12 +3,10 @@ import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
 import java.io.Serializable
 import javax.swing.JTextField
 
-class CustomJTextFiled(id: Action) : JTextField() {
+class CustomJTextFiled(id: MediaAction) : JTextField() {
 
     init {
         val key = keyMaps[id]!!
@@ -53,11 +51,11 @@ data class CustomKey(
         val keyMod: Int,
 ):Serializable
 
-var keyMaps = mutableMapOf<Action, CustomKey>(
-        Action.PAUSE to CustomKey(NativeKeyEvent.VC_SPACE, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
-        Action.PREV to CustomKey(NativeKeyEvent.VC_LEFT, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
-        Action.NEXT to CustomKey(NativeKeyEvent.VC_RIGHT, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
+var keyMaps = mutableMapOf<MediaAction, CustomKey>(
+        MediaAction.PAUSE to CustomKey(NativeKeyEvent.VC_SPACE, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
+        MediaAction.PREV to CustomKey(NativeKeyEvent.VC_LEFT, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
+        MediaAction.NEXT to CustomKey(NativeKeyEvent.VC_RIGHT, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
 
-        Action.ADD_VOL to CustomKey(NativeKeyEvent.VC_UP, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
-        Action.DEL_VOL to CustomKey(NativeKeyEvent.VC_DOWN, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
+        MediaAction.ADD_VOL to CustomKey(NativeKeyEvent.VC_UP, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
+        MediaAction.DEL_VOL to CustomKey(NativeKeyEvent.VC_DOWN, NativeKeyEvent.CTRL_L_MASK or NativeKeyEvent.ALT_L_MASK),
 )
