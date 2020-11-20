@@ -47,6 +47,10 @@ fun main() {
 
 
         addWindowListener(object : WindowAdapter() {
+            override fun windowActivated(e: WindowEvent?) {
+                super.windowActivated(e)
+                jframe.requestFocus()
+            }
             override fun windowClosing(e: WindowEvent?) {
                 super.windowClosing(e)
                 saveConfig()
