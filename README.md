@@ -21,3 +21,22 @@
 
 用的adb，所以使用这个工具的前提是要先装adb哈
 
+## 使用说明
+
+### 1.安装adb环境
+
+可参考，https://sspai.com/post/40471  
+
+连接手机确认连接正常
+
+![img.png](images/img_1.png)
+
+### 2. 下载本软件
+
+下载 release目录的三个文件  
+解压jre.rar到当前目录，如下图
+![img.png](images/img_2.png)  
+点击control_bt_music.exe即可打开
+
+
+
