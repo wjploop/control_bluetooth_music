@@ -1,3 +1,5 @@
+package com.wjp
+
 class Controller {
 
     fun nextMedia() {

@@ -1,3 +1,5 @@
+package com.wjp
+
 enum class MediaAction {
     PAUSE,
     PREV,

@@ -1,3 +1,5 @@
+package com.wjp
+
 import java.awt.GridLayout
 import javax.swing.*
 

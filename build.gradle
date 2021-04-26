@@ -6,6 +6,30 @@ plugins {
 group 'com.wjp'
 version '1.0'
 
+
+apply {
+    plugins
+}
+
+jar {
+    manifest {
+        attributes "Main-class": "com.wjp.MainKt"
+
+    }
+
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+
+}
+
+sourceSets{
+
+}
+sourceSets.main.resources { srcDirs = ["src/main/java"]; exclude "**/*.java" }
+
+
 repositories {
     mavenCentral()
 }

@@ -1,6 +1,10 @@
+package com.wjp
+
+import jdk.nashorn.internal.objects.Global
 import org.jnativehook.GlobalScreen
 import org.jnativehook.keyboard.NativeKeyEvent
 import org.jnativehook.keyboard.NativeKeyListener
+import sun.security.action.GetLongAction
 import java.awt.*
 import java.awt.event.*
 import java.io.*
@@ -35,15 +39,14 @@ fun main() {
         isVisible = true
 
 
-
         // 这里注意到使用了controller的javaClass
         // 若是在直接使用了javaClass,则会使用javax.JFrame的class，而这个class的resource会找不到图片
         // 原因是这两个类的加载器是不一样的哈
         println(javaClass.classLoader)
         println(controller.javaClass.classLoader)
-        val myImg = ImageIcon(controller.javaClass.getResource("avatar_32x32.jpg")).image
-        val smallImg = ImageIcon(controller.javaClass.getResource("avatar_16x16.jpg")).image
-        iconImage= myImg
+//        val myImg = ImageIcon(controller.javaClass.getResource("/avatar_32x32.jpg")).image
+//        val smallImg = ImageIcon(controller.javaClass.getResource("/avatar_16x16.jpg")).image
+//        iconImage = myImg
 
 
         addWindowListener(object : WindowAdapter() {
@@ -51,6 +54,7 @@ fun main() {
                 super.windowActivated(e)
                 jframe.requestFocus()
             }
+
             override fun windowClosing(e: WindowEvent?) {
                 super.windowClosing(e)
                 saveConfig()
@@ -66,7 +70,8 @@ fun main() {
                                 SwingUtilities.getWindowAncestor(optionPanel).dispose()
 
                                 val popupMenu = PopupMenu()
-                                val trayIcon = TrayIcon(smallImg, "control", popupMenu)
+//                                val trayIcon = TrayIcon(smallImg, "control", popupMenu)
+                                val trayIcon = TrayIcon(null, "control", popupMenu)
                                 fun showMainFrame() {
                                     jframe.isVisible = true
                                     SystemTray.getSystemTray().remove(trayIcon)
@@ -152,16 +157,18 @@ fun main() {
 val keymapsFile = File("keymaps")
 
 fun readConfig() {
-    ObjectInputStream(FileInputStream(keymapsFile)).use {
-        try {
+    try {
+
+        ObjectInputStream(FileInputStream(keymapsFile)).use {
             it.readObject()?.let {
                 @Suppress("UNCHECKED_CAST")
                 keyMaps = it as MutableMap<MediaAction, CustomKey>
             }
-        } catch (e: Exception) {
-
         }
+    } catch (e: Exception) {
+
     }
+
 }
 
 fun saveConfig() {
